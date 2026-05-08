@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+/* Base custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1; 
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; 
+}
+
+/* Accessibility Feature Classes */
+html.a11y-high-contrast {
+  filter: contrast(120%) saturate(150%) !important;
+}
+
+html.a11y-high-contrast body {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+html.a11y-high-contrast * {
+  border-color: #fff !important;
+}
+
+html.a11y-high-contrast .bg-white {
+  background-color: #000 !important;
+}
+
+html.a11y-high-contrast .text-slate-900,
+html.a11y-high-contrast .text-slate-800,
+html.a11y-high-contrast .text-slate-700,
+html.a11y-high-contrast .text-slate-600 {
+  color: #fff !important;
+}
+
+html.a11y-grayscale {
+  filter: grayscale(100%) !important;
+}
+
+html.a11y-large-text {
+  font-size: 110% !important;
+}
+
+html.a11y-xl-text {
+  font-size: 125% !important;
+}
+
+html.a11y-highlight-links a, 
+html.a11y-highlight-links button {
+  text-decoration: underline !important;
+  text-decoration-color: #ff0000 !important;
+  text-decoration-thickness: 3px !important;
+  outline: 2px solid #ff0000 !important;
+  outline-offset: 2px !important;
+}
+
+html.a11y-dyslexic,
+html.a11y-dyslexic * {
+  font-family: "Comic Sans MS", "Comic Sans", "OpenDyslexic", sans-serif !important;
+}
