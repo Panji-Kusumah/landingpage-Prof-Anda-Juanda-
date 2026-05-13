@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Accessibility, Type, Contrast, Monitor, Link2, RotateCcw, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
+//test
 export default function AccessibilityWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const btnRef = React.useRef<HTMLButtonElement>(null);

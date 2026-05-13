@@ -1,9 +1,9 @@
-import Database from 'better-sqlite3';
-import path from 'path';
-import fs from 'fs';
-import bcrypt from 'bcryptjs';
+import Database from "better-sqlite3";
+import path from "path";
+import fs from "fs";
+import bcrypt from "bcryptjs";
 
-const dbPath = path.join(process.cwd(), 'database.sqlite');
+const dbPath = path.join(process.cwd(), "database.sqlite");
 export const db = new Database(dbPath);
 
 export function initializeDatabase() {
@@ -55,25 +55,44 @@ export function initializeDatabase() {
   `);
 
   // Migrations for existing database
-  try { db.exec('ALTER TABLE publications ADD COLUMN file_path TEXT'); } catch (err) {}
-  try { db.exec('ALTER TABLE profile ADD COLUMN researchgate_url TEXT'); } catch (err) {}
-  try { db.exec('ALTER TABLE profile ADD COLUMN scopus_url TEXT'); } catch (err) {}
-  try { db.exec('ALTER TABLE profile ADD COLUMN orcid_url TEXT'); } catch (err) {}
-  try { db.exec('ALTER TABLE profile ADD COLUMN research_interests TEXT'); } catch (err) {}
-  try { db.exec('ALTER TABLE profile ADD COLUMN logo_url TEXT'); } catch (err) {}
+  try {
+    db.exec("ALTER TABLE publications ADD COLUMN file_path TEXT");
+  } catch (err) {}
+  try {
+    db.exec("ALTER TABLE profile ADD COLUMN researchgate_url TEXT");
+  } catch (err) {}
+  try {
+    db.exec("ALTER TABLE profile ADD COLUMN scopus_url TEXT");
+  } catch (err) {}
+  try {
+    db.exec("ALTER TABLE profile ADD COLUMN orcid_url TEXT");
+  } catch (err) {}
+  try {
+    db.exec("ALTER TABLE profile ADD COLUMN research_interests TEXT");
+  } catch (err) {}
+  try {
+    db.exec("ALTER TABLE profile ADD COLUMN logo_url TEXT");
+  } catch (err) {}
 
   // Seed default admin and profile if not exists
-  const user = db.prepare('SELECT * FROM users WHERE username = ?').get('admin');
+  const user = db
+    .prepare("SELECT * FROM users WHERE username = ?")
+    .get("admin");
   if (!user) {
-    const hash = bcrypt.hashSync('admin123', 10);
-    db.prepare('INSERT INTO users (username, password) VALUES (?, ?)').run('admin', hash);
+    const hash = bcrypt.hashSync("admin123", 10);
+    db.prepare("INSERT INTO users (username, password) VALUES (?, ?)").run(
+      "admin",
+      hash,
+    );
   }
 
-  const profile = db.prepare('SELECT * FROM profile WHERE id = 1').get();
+  const profile = db.prepare("SELECT * FROM profile WHERE id = 1").get();
   if (!profile) {
-    db.prepare(`
+    db.prepare(
+      `
       INSERT INTO profile (id, name, title, bio, email, scholar_url, photo_url, research_interests)
       VALUES (1, 'Prof. Dr. H. Anda Juanda, M.Pd.', 'Professor of Education & Curriculum Development', 'Prof. Dr. H. Anda Juanda, M.Pd. is a Professor at UIN Syekh Nurjati Cirebon. He has contributed significantly to the fields of Curriculum Development, Educational Philosophy, and Science Education. His comprehensive work includes extensive publications such as "Aliran-aliran Filsafat Landasan Kurikulum dan Pembelajaran", reflecting his deep expertise in philosophy ranging from Ancient Greek to Postmodern eras.\n\nHe is highly recognized for his educational innovation research, shaping character and education through local wisdom and scientific integration.', 'anda.juanda@syekhnurjati.ac.id', 'https://scholar.google.com/', 'https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&q=80', 'Curriculum Development, Educational Philosophy, Science Education, Local Wisdom, Integration of Science')
-    `).run();
+    `,
+    ).run();
   }
 }
